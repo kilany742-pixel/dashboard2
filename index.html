@@ -275,27 +275,53 @@ tbody tr:hover{background:rgba(78,205,196,.06)}
 
 /* MOBILE */
 @media(max-width:768px){
-  .sidebar{transform:translateX(100%)}
+  /* Sidebar hidden by default on mobile */
+  .sidebar{
+    transform:translateX(110%);
+    width:85vw;
+    max-width:300px;
+    z-index:500;
+    box-shadow:-4px 0 24px rgba(0,0,0,.3);
+  }
   .sidebar.open{transform:translateX(0)}
+  .sb-overlay{display:none;position:fixed;inset:0;z-index:490;background:rgba(0,0,0,.5)}
   .sb-overlay.open{display:block}
-  .main{margin-right:0}
-  .menu-btn{display:block}
-  .content{padding:14px}
+  .main{margin-right:0 !important}
+  .menu-btn{display:flex !important;align-items:center;justify-content:center}
+  .content{padding:12px}
   .two-col{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .m-grid{grid-template-columns:1fr}
   .areas-grid{grid-template-columns:1fr 1fr}
+  .branch-areas{grid-template-columns:1fr}
   .fridges-grid{grid-template-columns:1fr}
-  .filter-groups{grid-template-columns:1fr 1fr}
+  .filter-groups{grid-template-columns:1fr}
+  .branch-picker{flex-direction:column}
+  .bp-branch{min-width:100% !important;flex:none}
   .search-wrap{max-width:100%}
-  .topbar{padding:12px 14px}
+  .topbar{padding:10px 12px;gap:8px}
+  .topbar-title{font-size:14px}
+  .topbar-logo{width:28px;height:28px}
   .fp-grid{grid-template-columns:1fr}
+  .popup{max-width:100%;border-radius:16px 16px 0 0;position:fixed;bottom:0;left:0;right:0;max-height:85vh}
+  .popup-ov{align-items:flex-end;padding:0}
+  .modal{border-radius:16px 16px 0 0;position:fixed;bottom:0;left:0;right:0;max-height:90vh}
+  .modal-ov{align-items:flex-end;padding:0}
+  .filter-bar{padding:12px}
+  .pgn{flex-direction:column;gap:8px;align-items:flex-start}
+  .pgn-btns{flex-wrap:wrap}
+  .branch-header{padding:14px 16px}
+  .branch-name{font-size:15px}
 }
 @media(max-width:480px){
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
   .areas-grid{grid-template-columns:1fr}
   .filter-groups{grid-template-columns:1fr}
-  .stat-value{font-size:24px}
+  .stat-value{font-size:22px}
+  .stat-icon{width:38px;height:38px;font-size:18px}
+  .stat-card{padding:16px 14px}
+  .topbar-title{display:none}
+  .search-wrap{max-width:100%;flex:1}
 }
 
 /* BRANCH PICKER (filter) */
@@ -827,11 +853,6 @@ function renderBranchPicker(){
 }
 
 function updateAreaBtn(){
-  const lbl=document.getElementById('ml-area');
-  const cnt=document.getElementById('mc-area');
-  if(!lbl)return;
-  if(SEL.area.size===0){lbl.textContent='كل المناطق';lbl.classList.remove('active');if(cnt)cnt.style.display='none';}
-  else{const arr=[...SEL.area];lbl.textContent=arr.length<=2?arr.join('، '):`${arr[0]} و${arr.length-1} آخرين`;lbl.classList.add('active');if(cnt){cnt.textContent=SEL.area.size;cnt.style.display='inline';}}
   updateActiveTags();
 }
 
